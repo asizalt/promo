@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get("/promo2mp3", [\App\Http\Controllers\AudioController::class,'promo2mp3']);
-Route::get("/mp3", [\App\Http\Controllers\AudioController::class,'mp3']);
+Route::post("/promo2mp3/", [\App\Http\Controllers\AudioController::class,'promo2mp3']);
+Route::get("/mp3/{id}.mp3", [\App\Http\Controllers\AudioController::class,'mp3']);
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
