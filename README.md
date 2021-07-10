@@ -13,4 +13,4 @@ Example Output:
 ```
 #get BODY data according to file name:
 
-Execute a GET request to ``https:<domain>/api/mp3/<file name>.mp3`
+Execute a GET request to `https:<domain>/api/mp3/<file name>.mp3`
