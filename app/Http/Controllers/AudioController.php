@@ -60,6 +60,8 @@ class AudioController extends ApiController
 
     public function mp3(Request $request,$file_id){
 
+        //query database for file id
+
         $path=storage_path().'/output.mp3';
         $response = new BinaryFileResponse($path);
         BinaryFileResponse::trustXSendfileTypeHeader();
