@@ -18,33 +18,30 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class AudioController extends ApiController
 {
-    protected $GoutteService;
-    protected $FfmpegService;
 
-    public function __construct(GoutteService $GoutteService, FfmpegService $ffmpegService){
-        $this->FfmpegService = $ffmpegService;
-        $this->GoutteService = $GoutteService;
-    }
+    public function promo2mp3(Request $request,GoutteService $GoutteService, FfmpegService $ffmpegService){
 
-    public function promo2mp3(Request $request){
+        $promo_template = ($request->get('category'));
 
+        $category = $GoutteService->get_category($promo_template);
 
+        if(!$category)
+            return response()->json(['error' => 'no such Category'],404);
 
-        $promo_template = Str::slug($request->get('category'));
-
-        $audio = Audio::where('template_name',$promo_template)->first();
+        $audio = Audio::where('template_name',$category)->first();
 
         if($audio)
             return response()->json(['id'=>$audio->audio_id,'mp3' => $audio->mp3]);
 
-         $first_image =  $this->GoutteService->validateUrl($promo_template);
+         $first_image =  $GoutteService->validateUrl($category);
+
 
         if(!$first_image)
             return response()->json(['error' => 'Invalid Template Category'],404);
 
-        list($id,$audio_url) = $this->GoutteService->getUrl($first_image);
+        list($id,$audio_url) = $GoutteService->getUrl($first_image);
 
-        if($this->FfmpegService->extractMp3($audio_url,$id)){
+        if($ffmpegService->extractMp3($audio_url,$id)){
             $audio = Audio::create([
                'audio_id' => $id,
                'template_name' => $promo_template,

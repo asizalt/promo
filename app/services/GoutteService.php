@@ -12,6 +12,25 @@ class GoutteService
         $this->client = new Client();
     }
 
+    public function get_category($promo_template){
+
+        $crawler = $this->client->request(
+            'GET', env('PROMO_URL','https://promo.com/templates')
+        );
+
+        try {
+            $name = $crawler->filter("a:contains($promo_template)")->attr('href');
+        }catch (\Exception $e){
+            return null;
+        }
+
+        $uri_parts = explode('/', $name);
+
+        $id = substr($uri_parts[2], 0, strpos($uri_parts[2], '?'));
+
+       return $id;
+    }
+
     public function validateUrl($promo_template ){
         $crawler = $this->client->request(
             'GET', env('PROMO_URL','https://promo.com/templates').'/'.$promo_template
