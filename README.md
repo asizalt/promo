@@ -1,5 +1,9 @@
 # Promo Parser and mp3 Extractor
 
+##Start The project:
+1. create migration by executing the command `php artisan migrate`
+2. make sure that ffmpeg and ffprobe are installed
+
 ## Extract mp3 data by Category name
 
 Execute a POST request to `https:<domain>/api/promo2mp3` with the Category Name In Body:
