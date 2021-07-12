@@ -4,7 +4,14 @@
 ## Starting The project:
 This configuration is for running the project on vagrant machine.
 
-1. copy `env.example` to `env
+1. Execute `docker-compose up -d`
+2. login to the app contaniner : `docker exec -it <id> bash`
+
+    `
+        composer install
+        php artisan ket:genrate
+    `
+
 2. create the database according to env file or rename it to suite your needs
 3. login to vagrant machine `vgarant ssh`
 4. execute `composer install`
