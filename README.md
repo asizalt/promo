@@ -7,6 +7,7 @@ This configuration is for running the project on vagrant machine.
 1. Execute `docker-compose up -d`
 2. login to the app contaniner : `docker exec -it <id> bash`
 3. execute the fallowing from container : 
+
         `composer install`
         
         `php artisan ket:genrate`
