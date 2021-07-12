@@ -8,8 +8,11 @@ This configuration is for running the project on vagrant machine.
 2. login to the app contaniner : `docker exec -it <id> bash`
 3. execute the fallowing from container : 
         `composer install`
+        
         `php artisan ket:genrate`
+        
         `php artisan migrate`
+        
         `php artisan queue:listen`
 
 ## Extract mp3 data by Category name
