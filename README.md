@@ -1,10 +1,17 @@
 # Promo Parser and mp3 Extractor
 
-## Starting The project:
 
-1. create migration by executing the command `php artisan migrate`
-2. make sure that ffmpeg and ffprobe are installed
-3. Run `$php artisan queue:listen`
+## Starting The project:
+This configuration is for running the project on vagrant machine.
+
+1. copy `env.example` to `env
+2. create the database according to env file or rename it to suite your needs
+3. login to vagrant machine `vgarant ssh`
+4. execute `composer install`
+5. create migration by executing the command `php artisan migrate`
+6. execute `php artisan key:generate`
+7. make sure that ffmpeg and ffprobe are installed
+8. Run `$php artisan queue:listen`
 
 ## Extract mp3 data by Category name
 
