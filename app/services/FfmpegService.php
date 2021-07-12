@@ -18,8 +18,6 @@ class FfmpegService
     }
 
     public function extractMp3($url,$id){
-
-
         try{
         $advancedMedia = $this->ffmpeg->openAdvanced(
             array($url)

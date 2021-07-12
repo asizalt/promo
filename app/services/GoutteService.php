@@ -52,8 +52,8 @@ class GoutteService
         $end_uri = end($uri_parts);
         $id = substr($end_uri, 0, strpos($end_uri, '-'));
 
-        $mp4_url = str_replace(array('collections', '--thumb-small.jpg?dv=4'),
-            array('promoVideos', '/preview.mp4?dv=4'), $first_image);
+        $mp4_url = str_replace(array('collections', '--thumb-small.jpg'),
+            array('promoVideos', '/preview.mp4'), $first_image);
 
         return array($id,$mp4_url);
     }
