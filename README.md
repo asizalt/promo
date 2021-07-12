@@ -2,21 +2,42 @@
 
 
 ## Starting The project:
-This configuration is for running the project on vagrant machine.
 
-1. Execute `docker-compose up -d`
-2. login to the app contaniner : `docker exec -it <id> bash`
-3. execute the fallowing from container : 
+1. `cp .emv.example .env`
+2. Execute `docker-compose up -d`
+4. login to app container `docker-compose exec app bash` and run the fallowing
 
-        ` composer install
+        `
+        composer install
         
         php artisan ket:genrate
         
-        php artisan migrate
+        php artisan config:cache
         
-        php artisan queue:listen `
+        php artisan queue:listen
+        `
+        
+5. login to db container `docker-compose exec db bash` and run the fallowing:
+
+    `
+       mysql -u root -p
+       
+       GRANT ALL ON laravel_web.* TO 'homestead'@'%' IDENTIFIED BY 'secret'
+    
+      FLUSH PRIVILEGES;  
+    `
+    
+6. finnaly will login to the app container  `docker-compose exec app bash` and run the fallowing:
+
+    `
+        php artisan migrate
+    
+        php artisan queue:listen
+    `
 
 ## Extract mp3 data by Category name
+
+The project utilize queues for audio processing. please make sure the the listener is running
 
 Execute a POST request to `https:<domain>/api/promo2mp3` with the Category Name In Body:
 
