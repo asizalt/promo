@@ -6,19 +6,11 @@ This configuration is for running the project on vagrant machine.
 
 1. Execute `docker-compose up -d`
 2. login to the app contaniner : `docker exec -it <id> bash`
-
-    `
-        composer install
-        php artisan ket:genrate
-    `
-
-2. create the database according to env file or rename it to suite your needs
-3. login to vagrant machine `vgarant ssh`
-4. execute `composer install`
-5. create migration by executing the command `php artisan migrate`
-6. execute `php artisan key:generate`
-7. make sure that ffmpeg and ffprobe are installed
-8. Run `$php artisan queue:listen`
+3. execute the fallowing from container : 
+        `composer install`
+        `php artisan ket:genrate`
+        `php artisan migrate`
+        `php artisan queue:listen`
 
 ## Extract mp3 data by Category name
 
