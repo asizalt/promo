@@ -7,8 +7,7 @@
 2. Execute `docker-compose up -d`
 4. login to app container `docker-compose exec app bash` and run the fallowing
 
-        ```
-        
+  ```
         composer install
         
         php artisan ket:genrate
@@ -17,7 +16,7 @@
         
         php artisan queue:listen
         
-        ```
+ ```
         
 5. login to db container `docker-compose exec db bash` and run the fallowing:
 
