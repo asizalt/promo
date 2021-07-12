@@ -7,7 +7,8 @@
 2. Execute `docker-compose up -d`
 4. login to app container `docker-compose exec app bash` and run the fallowing
 
-        `
+        ```
+        
         composer install
         
         php artisan ket:genrate
@@ -16,26 +17,29 @@
         
         php artisan queue:listen
         
-        `
+        ```
         
 5. login to db container `docker-compose exec db bash` and run the fallowing:
 
-    `
+    ```
+    
     mysql -u root -p
        
     GRANT ALL ON laravel_web.* TO 'homestead'@'%' IDENTIFIED BY 'secret'
     
     FLUSH PRIVILEGES;  
       
-    `
+    ```
     
 6. finnaly will login to the app container  `docker-compose exec app bash` and run the fallowing:
 
-    `
+    ```
+    
     php artisan migrate
     
     php artisan queue:listen
-    `
+    
+    ```
 
 ## Extract mp3 data by Category name
 
