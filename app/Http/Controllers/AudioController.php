@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Jobs\ExtractMp3;
 use App\Services\GoutteService;
 use App\Services\FfmpegService;
 use FFMpeg\Format\Audio\Mp3;
@@ -19,45 +20,47 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class AudioController extends ApiController
 {
 
-    public function promo2mp3(Request $request,GoutteService $GoutteService, FfmpegService $ffmpegService){
+    public function promo2mp3(Request $request,GoutteService $GoutteService){
 
         $promo_template = ($request->get('category'));
+
+        $audio = Audio::where('template_name',$promo_template)
+            ->where('status',1)
+            ->latest()->first();
+
+        if($audio)
+            return response()->json(['id'=>$audio->audio_id,'mp3' => $audio->mp3]);
 
         $category = $GoutteService->get_category($promo_template);
 
         if(!$category)
             return response()->json(['error' => 'no such Category'],404);
 
-        $audio = Audio::where('template_name',$category)->first();
-
-        if($audio)
-            return response()->json(['id'=>$audio->audio_id,'mp3' => $audio->mp3]);
 
          $first_image =  $GoutteService->validateUrl($category);
-
 
         if(!$first_image)
             return response()->json(['error' => 'Invalid Template Category'],404);
 
         list($id,$audio_url) = $GoutteService->getUrl($first_image);
 
-        if($ffmpegService->extractMp3($audio_url,$id)){
-            $audio = Audio::create([
-               'audio_id' => $id,
-               'template_name' => $promo_template,
-                'mp3' => url("/posts/{$id}.mp3")
-            ]);
-            return response()->json(['id'=>$id,'mp3' => url("api/mp3/{$id}.mp3")]);
-        }
+        $AudioModel = Audio::create([
+            "audio_id" => $id,
+            "template_name" => $promo_template,
+            'mp3_url' => $audio_url,
+            'mp3' => url("/api/mp3/{$id}.mp3")
+        ]);
 
-        return response()->json(['error' => 'Extraction Process Faild'],404);
+
+        ExtractMp3::dispatch($AudioModel);
+
+        return response()->json(['id'=>$id,'mp3' => url("api/mp3/{$id}.mp3")]);
+
 
 
     }
 
     public function mp3(Request $request,$file_id){
-
-        //query database for file id
 
         $path=storage_path().'/'.$file_id.'.mp3';
 
