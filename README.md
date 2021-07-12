@@ -15,24 +15,26 @@
         php artisan config:cache
         
         php artisan queue:listen
+        
         `
         
 5. login to db container `docker-compose exec db bash` and run the fallowing:
 
     `
-       mysql -u root -p
+    mysql -u root -p
        
-       GRANT ALL ON laravel_web.* TO 'homestead'@'%' IDENTIFIED BY 'secret'
+    GRANT ALL ON laravel_web.* TO 'homestead'@'%' IDENTIFIED BY 'secret'
     
-      FLUSH PRIVILEGES;  
+    FLUSH PRIVILEGES;  
+      
     `
     
 6. finnaly will login to the app container  `docker-compose exec app bash` and run the fallowing:
 
     `
-        php artisan migrate
+    php artisan migrate
     
-        php artisan queue:listen
+    php artisan queue:listen
     `
 
 ## Extract mp3 data by Category name
